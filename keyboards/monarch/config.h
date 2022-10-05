@@ -17,13 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0x4011
-#define PRODUCT_ID      0x43C1
-#define DEVICE_VER      0x0001
-#define MANUFACTURER DoCallMeKing
-#define PRODUCT Monarch
-
 /* key matrix size */
 #define MATRIX_ROWS 6
 #define MATRIX_COLS 16
@@ -45,6 +38,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define BACKLIGHT_LEVELS 24
 #define BACKLIGHT_BREATHING
 #define BREATHING_PERIOD 6
+
+#define SLEEP_LED_GPT_DRIVER GPTD1
 
 /* define if matrix has ghost */
 //#define MATRIX_HAS_GHOST
@@ -73,5 +68,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_LAYER
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
-//#define NO_ACTION_MACRO
-//#define NO_ACTION_FUNCTION
