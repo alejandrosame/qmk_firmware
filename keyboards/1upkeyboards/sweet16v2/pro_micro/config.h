@@ -1,4 +1,4 @@
-/* Copyright 2022 Jose Pablo Ramirez <jp.ramangulo@gmail.com>
+/* Copyright 2022 ziptyze
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,73 +18,16 @@
 
 #include "config_common.h"
 
-/* key matrix size */
-#define MATRIX_ROWS 5
-#define MATRIX_COLS 3
+#define DYNAMIC_KEYMAP_LAYER_COUNT 10
 
-/* Keyboard Matrix Assignments */
-// clang-format off
-#define DIRECT_PINS { \
-    { NO_PIN, NO_PIN, GP0  }, \
-    { GP1,    GP2,    GP3  }, \
-    { GP4,    GP5,    GP6  }, \
-    { GP7,    GP8,    GP9  }, \
-    { GP10,   GP11,   GP12 }  \
-}
-// clang-format on
-
-/* OLED SPI Defines */
-#define OLED_DISPLAY_128X64
-#define OLED_IC OLED_IC_SH1106
-
-/* OLED SPI Pins */
-#define OLED_DC_PIN GP24
-#define OLED_CS_PIN GP22
-#define OLED_RST_PIN GP23
-
-/* Shift OLED columns by 2 pixels */
-#define OLED_COLUMN_OFFSET 2
-
-/* Divisor for OLED */
-#define OLED_SPI_DIVISOR 4
-
-/* ChibiOS SPI definitions */
-#define SPI_DRIVER SPID1
-#define SPI_SCK_PIN GP26
-#define SPI_MOSI_PIN GP27
-#define SPI_MISO_PIN GP28
-
-/* Encoders */
-#define ENCODERS_PAD_A { GP18 }
-#define ENCODERS_PAD_B { GP17 }
-
-#define DEBOUNCE 5
-
-/* Bootmagic lite */
-/* (Press the key below the encoder button while plugging the keyboard to enter the bootloader and clear flash) */
-#define BOOTMAGIC_LITE_ROW 1
-#define BOOTMAGIC_LITE_COLUMN 2
-
-/* Double tap the side button to enter bootloader */
-#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
-#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_LED GP13
-#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 500U
-
-/* Audio (Unsupported for now)*/
-// #define AUDIO_PIN GP16
-// #define SPEAKER_SHUTDOWN GP14
-
-#ifdef RGB_MATRIX_ENABLE
-
-     /* RGB Defines */
-#    define RGB_DI_PIN GP19
-#    define DRIVER_LED_TOTAL 12
-#    define RGBLED_NUM 12
-
-     /* Enable Framebuffer and keypress effects */
-#    define RGB_MATRIX_FRAMEBUFFER_EFFECTS
-#    define RGB_MATRIX_KEYPRESSES
-
+#define RGB_DI_PIN D7
+#define DRIVER_LED_TOTAL 20
+#define RGB_MATRIX_KEYPRESSES
+#define RGB_MATRIX_FRAMEBUFFER_EFFECTS
+#define RGB_DISABLE_WHEN_USB_SUSPENDED
+// RGB Matrix Animation modes. Explicitly enabled
+// For full list of effects, see:
+// https://docs.qmk.fm/#/feature_rgb_matrix?id=rgb-matrix-effects
 #    define ENABLE_RGB_MATRIX_ALPHAS_MODS
 #    define ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN
 #    define ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
@@ -114,8 +57,10 @@
 #    define ENABLE_RGB_MATRIX_PIXEL_RAIN
 #    define ENABLE_RGB_MATRIX_PIXEL_FLOW
 #    define ENABLE_RGB_MATRIX_PIXEL_FRACTAL
+// enabled only if RGB_MATRIX_FRAMEBUFFER_EFFECTS is defined
 #    define ENABLE_RGB_MATRIX_TYPING_HEATMAP
 #    define ENABLE_RGB_MATRIX_DIGITAL_RAIN
+// enabled only of RGB_MATRIX_KEYPRESSES or RGB_MATRIX_KEYRELEASES is defined
 #    define ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE
 #    define ENABLE_RGB_MATRIX_SOLID_REACTIVE
 #    define ENABLE_RGB_MATRIX_SOLID_REACTIVE_WIDE
@@ -128,4 +73,12 @@
 #    define ENABLE_RGB_MATRIX_MULTISPLASH
 #    define ENABLE_RGB_MATRIX_SOLID_SPLASH
 #    define ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
-#endif
+
+/* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
+#define LOCKING_SUPPORT_ENABLE
+/* Locking resynchronize hack */
+#define LOCKING_RESYNC_ENABLE
+
+/* Bootmagic Lite key configuration */
+#define BOOTMAGIC_LITE_ROW 0
+#define BOOTMAGIC_LITE_COLUMN 0
