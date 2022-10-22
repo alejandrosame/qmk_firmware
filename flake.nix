@@ -3,7 +3,7 @@
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/c0e881852006b132236cbf0301bd1939bb50867e";
 
-  inputs.flake-utils.url = "github:numtide/flake-utils";
+  inputs.flake-utils.url = "github:numtide/flake-utils/c0e246b9b83f637f4681389ecabcb2681b4f3af0";
 
   outputs = {
     self,
@@ -15,8 +15,10 @@
       sources = import ./util/nix/sources.nix {};
 
       pythonOverlay = import ./util/nix/python-overlay.nix;
+
+      #	  (builtins.filter (system: system != "aarch64-darwin") flake-utils.lib.defaultSystems)
     }
-    // flake-utils.lib.eachSystem ["x86_64-linux"] (
+    // flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = import nixpkgs {
           overlays = [self.pythonOverlay];
