@@ -15,8 +15,6 @@
       sources = import ./util/nix/sources.nix {};
 
       pythonOverlay = import ./util/nix/python-overlay.nix;
-
-      #	  (builtins.filter (system: system != "aarch64-darwin") flake-utils.lib.defaultSystems)
     }
     // flake-utils.lib.eachDefaultSystem (
       system: let
