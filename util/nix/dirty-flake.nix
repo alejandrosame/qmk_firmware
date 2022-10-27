@@ -7,14 +7,14 @@
   in {
     flake-utils = import packageSources.flake-utils.outPath;
     nixpkgs = packageSources.nixpkgs.outPath;
-    poetry2nix = import packageSources.poetry2nix.outPath;
+    poetry2nix-src = packageSources.poetry2nix;
   };
 
   outputs = {
     self,
     flake-utils,
     nixpkgs,
-    poetry2nix,
+    poetry2nix-src,
     ...
   }:
     {
@@ -26,6 +26,8 @@
           overlays = [self.pythonOverlay];
           inherit system;
         };
+
+        poetry2nix = pkgs.callPackage (poetry2nix-src) {};
       in {
         devShells.default = pkgs.callPackage ../../shell.nix {inherit pkgs poetry2nix;};
       }
