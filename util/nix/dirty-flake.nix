@@ -27,7 +27,7 @@
           inherit system;
         };
 
-        poetry2nix = pkgs.callPackage (poetry2nix-src) {};
+        poetry2nix = pkgs.callPackage poetry2nix-src {};
       in {
         devShells.default = pkgs.callPackage ../../shell.nix {inherit pkgs poetry2nix;};
       }
