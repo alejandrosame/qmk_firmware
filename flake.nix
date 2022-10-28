@@ -2,9 +2,10 @@
   description = "QMK firmware";
 
   # Input dependencies are loaded on the dirty flake side via Niv.
-  outputs = {self}: let
+  # This pattern is inspired by https://github.com/crazazy/niv-flakes.
+  outputs = args: let
     dirtyFlake = import ./util/nix/dirty-flake.nix;
-    dirtyFlakeInputs = dirtyFlake.inputs // {inherit self;};
+    shellNix-path = ./shell.nix;
   in
-    dirtyFlake.outputs dirtyFlakeInputs;
+    dirtyFlake.outputs (args // {inherit shellNix-path;} // dirtyFlake.inputs);
 }

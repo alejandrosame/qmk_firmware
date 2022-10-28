@@ -1,7 +1,7 @@
 {
   description = "QMK firmware dirty flake expression";
 
-  # Consume inputs from Niv and make them compatible with outputs args usage.
+  # Load inputs from Niv and make them compatible with outputs args usage.
   inputs = let
     packageSources = import ./sources.nix {};
   in {
@@ -15,7 +15,7 @@
     flake-utils,
     nixpkgs,
     poetry2nix-src,
-    ...
+    shellNix-path,
   }:
     {
       pythonOverlay = import ./python-overlay.nix;
@@ -27,9 +27,9 @@
           inherit system;
         };
 
-        poetry2nix = pkgs.callPackage (poetry2nix-src) {};
+        poetry2nix = pkgs.callPackage poetry2nix-src {};
       in {
-        devShells.default = pkgs.callPackage ../../shell.nix {inherit pkgs poetry2nix;};
+        devShells.default = pkgs.callPackage shellNix-path {inherit pkgs poetry2nix;};
       }
     );
 }
