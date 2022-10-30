@@ -3,21 +3,24 @@
     nixpkgs.url = "github:NixOS/nixpkgs?rev=c0e881852006b132236cbf0301bd1939bb50867e";
     # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     poetry2nix = {
-      url = "github:nix-community/poetry2nix?rev=88ffae91c605aaafc2797f4096ca9f065152796a";
+      url = "github:nix-community/poetry2nix?rev=11c0df8e348c0f169cd73a2e3d63f65c92baf666";
       # url = "github:nix-community/poetry2nix/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
   outputs = args @ {
     self,
-    nixpkgs,
     flake-utils,
-    ...
+    nixpkgs,
+    poetry2nix,
   }:
     flake-utils.lib.eachDefaultSystem (
       system: let
-        overlays = [args.poetry2nix.overlay];
+        pythonOverlay = import ./util/nix/python-overlay.nix;
+        overlays = [pythonOverlay args.poetry2nix.overlay];
+
         pkgs = import nixpkgs {inherit system overlays;};
+
         inherit (pkgs) lib pkgsCross;
 
         makeShell = {
