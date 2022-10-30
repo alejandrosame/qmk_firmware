@@ -1,14 +1,24 @@
+# Original flake approach taken from: https://github.com/thorstenweber83/qmk_firmware/blob/80359c4ef35bb82ac929ea7b339ef406cee1bf5b/flake.nix
 {
+  description = "QMK firmware";
+
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs?rev=c0e881852006b132236cbf0301bd1939bb50867e";
-    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils = {
+      url = "github:numtide/flake-utils/c0e246b9b83f637f4681389ecabcb2681b4f3af0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs/c0e881852006b132236cbf0301bd1939bb50867e";
+    };
+
     poetry2nix = {
-      url = "github:nix-community/poetry2nix?rev=11c0df8e348c0f169cd73a2e3d63f65c92baf666";
-      # url = "github:nix-community/poetry2nix/master";
+      url = "github:nix-community/poetry2nix/11c0df8e348c0f169cd73a2e3d63f65c92baf666";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = args @ {
+
+  outputs = inputs @ {
     self,
     flake-utils,
     nixpkgs,
@@ -17,7 +27,7 @@
     flake-utils.lib.eachDefaultSystem (
       system: let
         pythonOverlay = import ./util/nix/python-overlay.nix;
-        overlays = [pythonOverlay args.poetry2nix.overlay];
+        overlays = [pythonOverlay inputs.poetry2nix.overlay];
 
         pkgs = import nixpkgs {inherit system overlays;};
 
